@@ -1,0 +1,37 @@
+name: Test
+on: workflow_dispatch
+
+jobs:
+    checks:
+        name: Checks
+        runs-on: ubunntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                django-version: ['4.1', '4.2', '5.0']
+
+        services:
+          postgres:
+            image: library/postgres:15-alpine
+            env:
+                POSTGRES_PASSWORD: test
+                POSTGRES_USER: test
+                POSTGRES_DB: test
+            ports:
+                - 5432:5432
+            # needed because the postgres container does not provide a healthcheck
+            options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        steps:
+            - uses: actions/checkout@v3
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.12'
+            - name: Install Dependencies
+              run: |
+                pip install "django==${{matrix.django-version}}" django-netfields psycopg2-binary
+            - name: Run test
+              run: |
+                ./manage.py test
+
+
