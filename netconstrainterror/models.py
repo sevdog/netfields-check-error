@@ -3,7 +3,7 @@ from netfields import CidrAddressField, InetAddressField
 
 
 class AssignableIP(models.Model):
-    current_ip = InetAddressField(default=None, null=True, blank=True)
+    current_ip = InetAddressField(store_prefix_length=False, default=None, null=True, blank=True)
     network = CidrAddressField()
 
     class Meta:
