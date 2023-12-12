@@ -9,7 +9,7 @@ jobs:
             fail-fast: false
             matrix:
                 django-version: ['4.1', '4.2', '5.0']
-                pycpg-version: ['psycopg2-binary', 'psycopg-binary']
+                psycopg-version: ['psycopg2-binary', 'psycopg-binary']
 
         services:
           postgres:
@@ -30,7 +30,7 @@ jobs:
                 python-version: '3.12'
             - name: Install Dependencies
               run: |
-                pip install "django==${{matrix.django-version}}" django-netfields ${{matrix.django-version}}
+                pip install "django==${{matrix.django-version}}" django-netfields ${{matrix.psycopg-version}}
             - name: Run test
               run: |
                 ./manage.py test
