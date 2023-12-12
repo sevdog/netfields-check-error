@@ -4,7 +4,7 @@ on: [push, workflow_dispatch]
 jobs:
     checks:
         name: Checks
-        runs-on: ubunntu-latest
+        runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
