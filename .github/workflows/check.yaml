@@ -10,6 +10,9 @@ jobs:
             matrix:
                 django-version: ['4.1', '4.2', '5.0']
                 psycopg-version: ['psycopg2-binary', 'psycopg[binary]']
+                exclude:
+                  - django-version: '4.1'
+                    psycopg-version: 'psycopg[binary]'
 
         services:
           postgres:
