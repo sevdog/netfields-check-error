@@ -8,10 +8,10 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                django-version: ['4.1', '4.2', '5.0']
+                django-version: ['>=4.1,<4.2', '>=4.2,<5.0', '>=5.0,<5.1']
                 psycopg-version: ['psycopg2-binary', 'psycopg[binary]']
                 exclude:
-                  - django-version: '4.1'
+                  - django-version: '>=4.1,<4.2'
                     psycopg-version: 'psycopg[binary]'
 
         services:
@@ -33,7 +33,7 @@ jobs:
                 python-version: '3.12'
             - name: Install Dependencies
               run: |
-                pip install "django==${{matrix.django-version}}" django-netfields ${{matrix.psycopg-version}}
+                pip install "django${{matrix.django-version}}" django-netfields ${{matrix.psycopg-version}}
             - name: Run test
               run: |
                 ./manage.py test
